@@ -80,3 +80,17 @@ pub fn solve(cities: &[(f64, f64)], runtime: Duration) -> Tour {
         route: best_candidate.route,
     }
 }
+
+pub fn solve_matrix(distance_matrix: &Vec<Vec<f64>>, runtime: Duration) -> Tour {
+    let mut tsp = TravellingSalesman {
+        distance_matrix,
+        rng: &mut thread_rng(),
+    };
+
+    let best_candidate = metaheuristics::simulated_annealing::solve(&mut tsp, runtime);
+
+    Tour {
+        distance: get_route_distance(tsp.distance_matrix, &best_candidate.route),
+        route: best_candidate.route,
+    }
+}
