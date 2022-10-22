@@ -83,6 +83,31 @@ pub fn solve(cities: &[(f64, f64)]) -> Tour {
     smallest_tour
 }
 
+pub fn solve_matrix(distance_matrix: &[Vec<f64>], list_length: usize) -> Tour {
+    let mut smallest_tour = Tour {
+        distance: 0.0,
+        route: vec![],
+    };
+
+    if list_length == 0usize {
+        return smallest_tour;
+    }
+
+    let mut unvisited_cities =
+        HashSet::<usize>::from_iter((0..list_length).collect::<Vec<usize>>());
+    let current_route = vec![0];
+    unvisited_cities.remove(&0);
+
+    _brute_force(
+        distance_matrix,
+        unvisited_cities,
+        current_route,
+        &mut smallest_tour,
+    );
+
+    smallest_tour
+}
+
 fn _brute_force(
     distance_matrix: &[Vec<f64>],
     unvisited_cities: HashSet<usize>,
